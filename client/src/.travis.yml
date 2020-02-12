@@ -1,0 +1,10 @@
+sudo: required
+services:
+    - docker # installs docker client in the container
+
+before_install: # performs steps before the test run such as build the image
+    - docker build -t cshorne/docker-react -f Dockerfile.dev . # build and tag it 
+        # note that the tag is only valid within this Travis operation
+
+script: # contains the test scripts... looking for return code 0 form each line
+    - docker run -e CI=true cshorne/docker-react npm run test
